@@ -13,6 +13,6 @@ public class XmlMapperReloadConfig {
     @Bean
     @Profile("dev")
     public XmlMapperReload xmlMapperReload(SqlSessionFactory sqlSessionFactory, MybatisPlusProperties mybatisPlusProperties) {
-        return new XmlMapperReload(mybatisPlusProperties.resolveMapperLocations(), sqlSessionFactory, 2, 2, true);
+        return new XmlMapperReload(mybatisPlusProperties.resolveMapperLocations(), sqlSessionFactory, 2, true);
     }
 }

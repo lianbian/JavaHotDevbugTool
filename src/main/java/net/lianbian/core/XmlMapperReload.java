@@ -39,14 +39,11 @@ public class XmlMapperReload implements Runnable {
     private Set<String> fileSet;
 
     private Long beforeTime = 0L;
+
     /**
-     * 延迟加载时间
+     * 多久检查一次
      */
-    private int delaySeconds = 10;
-    /**
-     * 刷新间隔时间
-     */
-    private int sleepSeconds = 20;
+    private int checkSeconds = 20;
     /**
      * 是否开启刷新mapper
      */
@@ -59,13 +56,10 @@ public class XmlMapperReload implements Runnable {
      */
     private static final Map<String, String> reloadMapperXmlMaps = new HashMap<>();
 
-    public XmlMapperReload(Resource[] mapperLocations, SqlSessionFactory sqlSessionFactory, int delaySeconds,
-                           int sleepSeconds, boolean enabled) {
-        this.mapperLocations = mapperLocations.clone();
+    public XmlMapperReload(Resource[] mapperLocations, SqlSessionFactory sqlSessionFactory, int checkSeconds, boolean enabled) {
+        this.mapperLocations = mapperLocations;
         this.sqlSessionFactory = sqlSessionFactory;
-        this.delaySeconds = delaySeconds;
         this.enabled = enabled;
-        this.sleepSeconds = sleepSeconds;
         this.configuration = sqlSessionFactory.getConfiguration();
         this.run();
     }
@@ -106,7 +100,7 @@ public class XmlMapperReload implements Runnable {
                     }
                 }
                 try {
-                    Thread.sleep(delaySeconds * 1000);
+                    Thread.sleep(checkSeconds * 1000);
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
@@ -129,7 +123,7 @@ public class XmlMapperReload implements Runnable {
                         exception.printStackTrace();
                     }
                     try {
-                        Thread.sleep(sleepSeconds * 1000);
+                        Thread.sleep(checkSeconds * 1000);
                     } catch (InterruptedException interruptedException) {
                         interruptedException.printStackTrace();
                     }
@@ -146,17 +140,17 @@ public class XmlMapperReload implements Runnable {
      * @return
      */
     private boolean checkRefresh(String filePath, File file) {
-        if(!file.isFile()) {
+        if (!file.isFile()) {
             return false;
         }
 
-        if(file.lastModified() < this.beforeTime) {
+        if (file.lastModified() < this.beforeTime) {
             return false;
         }
 
         String fileOldMd5 = reloadMapperXmlMaps.getOrDefault(filePath, "");
         String fileNewMd5 = this.getMd5(file);
-        if(fileOldMd5.equals(fileNewMd5)) {
+        if (fileOldMd5.equals(fileNewMd5)) {
             return false;
         }
 
@@ -166,6 +160,7 @@ public class XmlMapperReload implements Runnable {
 
     /**
      * 获取文件值的md5
+     *
      * @param file
      * @return
      */
