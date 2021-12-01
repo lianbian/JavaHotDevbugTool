@@ -10,4 +10,5 @@
 2. 导入数据到数据库，sql脚本路径：resources/db/lianbian.sql；
 3. 配置数据库连接 application.properties 文件；
 4. 加载maven引用
-5. 手动编译方式 ctrl + f9 查看对应的日志输出
+5. 启动 `lianbianBootApplication` 为启动入口；
+6. 手动编译方式 ctrl + f9 查看对应的日志输出
