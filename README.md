@@ -1,4 +1,4 @@
-# Java开发环境热加载
+# Java开发环境热加载工具
 
 ## 基于`Spring boot` + `Mybatis Plus` 热加载开发环境。
 ### 支持`Java`文件和`mapper xml`文件。
