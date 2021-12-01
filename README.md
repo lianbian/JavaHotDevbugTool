@@ -6,7 +6,8 @@
 # 用于本地开发，不要用于生产环境。
 
 # 使用简易教程
-1. 导入数据到数据库，sql脚本路径：resources/db/lianbian.sql；
-2. 配置数据库连接 application.properties 文件；
-3. 加载maven引用
-4. 手动编译方式 ctrl + f9 查看对应的日志输出
+1. 配置 application.properties 环境为`dev`，在注解配置的时候，只有`dev`环境开启了注解；
+2. 导入数据到数据库，sql脚本路径：resources/db/lianbian.sql；
+3. 配置数据库连接 application.properties 文件；
+4. 加载maven引用
+5. 手动编译方式 ctrl + f9 查看对应的日志输出
